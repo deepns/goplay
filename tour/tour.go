@@ -182,7 +182,7 @@ func ifElse() {
 		fmt.Printf("random number(%v) is odd\n", num)
 	}
 
-	// can't access num here.
+	// can't access num here, since it is outside the scope
 	// fmt.Println(num)
 
 	// this stype of variable assignment in one line, followed
@@ -312,9 +312,37 @@ func Slices() {
 	fmt.Printf("jerseyNumbers is a slice created using %T{%v}, len=%v, cap=%v\n",
 		jerseyNumbers, jerseyNumbers, len(jerseyNumbers), cap(jerseyNumbers))
 
-	// TODO
-	// - [ ] Slice of slice // score [runs][balls]
-	// - [ ] slice with structs
+	// multi-dimensional slices
+	// (aka slice of slices)
+	var extras [][]int
+	fmt.Printf("extras is a slice of slice, of type %T\n", extras)
+
+	type Stadium struct {
+		city     string
+		capacity uint
+		rating   float32
+	}
+
+	venues := [][]Stadium{
+		{
+			Stadium{"Melbourne", 50000, 8.3},
+			Stadium{"Sydney", 100000, 6.3},
+		},
+		{
+			Stadium{"Chennai", 75000, 10.0},
+			Stadium{"Bengaluru", 50000, 6.0},
+		},
+		{
+			Stadium{"Lords", 120000, 7},
+			Stadium{"Old Trafford", 50000, 7},
+		},
+		[]Stadium{}, // empty slice
+	}
+
+	fmt.Printf("venues is a slice of slice of type %T, of len=%v, cap=%v\n",
+		venues,
+		len(venues),
+		cap(venues))
 
 	//
 	// Accessing an array or a slice
@@ -362,4 +390,7 @@ func Slices() {
 		fmt.Printf("len(players)=%v, cap(players)=%v, addr(players)=%p\n",
 			len(players), cap(players), players)
 	}
+
+	// appending to a slice within slice.
+	venues[3] = append(venues[3], Stadium{"Jamaica", 35000, 9.3})
 }
