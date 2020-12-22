@@ -15,7 +15,7 @@ func main() {
 	Conditionals()
 	Structs()
 	Slices()
-	// maps
+	Maps()
 }
 
 // BasicTypes lists usage of some basic data types in Go
@@ -393,4 +393,69 @@ func Slices() {
 
 	// appending to a slice within slice.
 	venues[3] = append(venues[3], Stadium{"Jamaica", 35000, 9.3})
+}
+
+// Maps ...
+func Maps() {
+	// maps are key-value pairs
+	// similar to slice, they can be created with "make" or literals
+
+	// declare a map like this
+	// var mapname map[key-type]value-type
+	var counter map[string]int
+
+	// Declaration only declares a nil map
+	// New values can't be inserted into the map
+	fmt.Println(counter)
+	// this is not allowed since map is not allocated yet
+	// counter["odds"] = 5
+
+	// allocate a map with make keyword
+	counter = make(map[string]int)
+
+	// Insert a key-value pair into the map
+	counter["odds"] = 5
+	fmt.Println(counter)
+
+	// map literals
+	// keys are inserted and retrieved in sorted order
+	stepCount := map[string]int{
+		"Wednesday": 3949,
+		"Monday":    2500,
+		"Tuesday":   4000,
+		"Saturday":  4929,
+	}
+
+	fmt.Printf("stepCount is a %T created with map literals with values %v\n",
+		stepCount,
+		stepCount)
+
+	// range keyword can be used to iterate maps as well
+	// range returns a key, value from the map
+	for day, steps := range stepCount {
+		fmt.Printf("I walked %v steps on %v\n", steps, day)
+	}
+
+	// Deleting an element from map
+	// delete(map, key)
+	dayToDelete := "Wednesday"
+	delete(stepCount, dayToDelete)
+	fmt.Printf("Deleted %v from %v\n", dayToDelete, stepCount)
+
+	// When key is missing, lookup will return zero value of
+	// the value-type. In this example, stepCount maps string
+	// to int. Since zero value of int is 0, accessing a
+	// missing would return 0.
+	steps := stepCount[dayToDelete]
+	fmt.Printf("I walked %v steps on %v\n", steps, dayToDelete)
+
+	// Existence of a key in map can be tested with two value assignment
+	_, ok := stepCount[dayToDelete]
+	if !ok {
+		fmt.Printf("Step count not available for Wednesday\n")
+	}
+
+	// Maps support len() too, returning the number of elements
+	// in the map
+	fmt.Printf("len(stepCount)=%v\n", len(stepCount))
 }
